@@ -7,25 +7,25 @@
   <style>
     .summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
     .tile { border-width: 2px; transition: border-color .2s, transform .15s; }
-    .tile.running { border-color: color-mix(in srgb, var(--hw-ok) 55%, var(--hw-line)); }
-    .tile.error { border-color: color-mix(in srgb, var(--hw-err) 60%, var(--hw-line)); }
+    .tile.running { border-color: color-mix(in srgb, var(--ok) 55%, var(--hw-line)); }
+    .tile.error { border-color: color-mix(in srgb, var(--err) 60%, var(--hw-line)); }
     .tile.stopped { opacity: .75; }
-    .tile .kind { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--hw-muted); }
+    .tile .kind { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
     .tile .name { font-size: 18px; font-weight: 700; margin: 4px 0 6px; }
-    .tile .meta { font-size: 12.5px; color: var(--hw-muted); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .tile .meta { font-size: 12.5px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
     .tile .actions { margin-top: 12px; display: flex; gap: 6px; }
-    body.size-compact .hw-grid { --hw-min: 190px; } body.size-compact .tile .name { font-size: 15px; }
-    body.size-wall .hw-grid { --hw-min: 300px; } body.size-wall .tile { padding: 24px; } body.size-wall .tile .name { font-size: 26px; }
+    body.size-compact .grid-auto { --hw-min: 190px; } body.size-compact .tile .name { font-size: 15px; }
+    body.size-wall .grid-auto { --hw-min: 300px; } body.size-wall .tile { padding: 24px; } body.size-wall .tile .name { font-size: 26px; }
     .clock { font-size: 28px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
-  <div class="hw-row">
-    <div class="hw-grow"><h1 data-i18n="title"></h1><p class="hw-sub" id="sub" data-i18n="loading"></p></div>
+  <div class="row">
+    <div class="grow"><p class="muted" id="sub" data-i18n="loading"></p></div>
     <div class="clock" id="clock"></div>
   </div>
   <div class="summary" id="summary"></div>
-  <div id="groups" class="hw-stack"><div class="hw-skeleton" style="height:120px"></div></div>
+  <div id="groups" class="stack"><div class="hw-skeleton" style="height:120px"></div></div>
   <script src="lib.js"></script>
   <script src="app.js"></script>
 </body>

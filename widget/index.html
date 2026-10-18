@@ -9,7 +9,7 @@
     .ring svg { width: 64px; height: 64px; transform: rotate(-90deg); }
     .ring circle { fill: none; stroke-width: 7; }
     .ring .track { stroke: var(--hw-surface-3); }
-    .ring .bar { stroke: var(--hw-ok); stroke-linecap: round; transition: stroke-dashoffset .4s ease; }
+    .ring .bar { stroke: var(--ok); stroke-linecap: round; transition: stroke-dashoffset .4s ease; }
     .big { font-size: 22px; font-weight: 700; }
     .problem { display: flex; gap: 6px; align-items: center; font-size: 12.5px; padding: 3px 0; }
   </style>
@@ -17,7 +17,7 @@
 <body>
   <div class="ring">
     <svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"/><circle class="bar" id="bar" cx="32" cy="32" r="26" stroke-dasharray="163.4" stroke-dashoffset="163.4"/></svg>
-    <div><div class="big" id="count">–</div><div class="hw-muted hw-small" data-i18n="servicesRunning"></div></div>
+    <div><div class="big" id="count">–</div><div class="muted small" data-i18n="servicesRunning"></div></div>
   </div>
   <div id="problems" style="margin-top:8px"></div>
   <script>
@@ -28,7 +28,7 @@
       document.getElementById('count').textContent = `${up} / ${all.length}`;
       document.getElementById('bar').setAttribute('stroke-dashoffset', String(163.4 * (1 - (all.length ? up / all.length : 0))));
       const bad = all.filter((s) => s.state === 'error');
-      Hostwerk.render('#problems', bad.length ? html`${bad.slice(0, 4).map((s) => html`<div class="problem"><span class="hw-dot hw-err"></span>${s.name}</div>`)}` : html`<div class="hw-muted hw-small">${t('allGood')}</div>`);
+      Hostwerk.render('#problems', bad.length ? html`${bad.slice(0, 4).map((s) => html`<div class="problem"><span class="dot err"></span>${s.name}</div>`)}` : html`<div class="muted small">${t('allGood')}</div>`);
     }
     Hostwerk.ready().then(() => { load(); Hostwerk.on('service', load); setInterval(load, 20000); });
   </script>

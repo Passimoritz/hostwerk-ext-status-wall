@@ -9,7 +9,7 @@
     "de": "Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bildschirm oder das Tablet an der Wand. Ein Klick startet Gestopptes neu (mit Rückfrage).",
     "en": "All services big and colourful at a glance – ideal for a second screen or a tablet on the wall. One click restarts what stopped (asks first)."
   },
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Hostwerk",
   "homepage": "https://github.com/Passimoritz/hostwerk-ext-status-wall",
   "license": "MIT",
@@ -26,7 +26,11 @@
       "en": "Status Wall"
     },
     "icon": "monitor",
-    "file": "page/index.html"
+    "file": "page/index.html",
+    "description": {
+      "de": "Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bildschirm oder das Tablet an der Wand. Ein Klick startet Gestopptes neu (mit Rückfrage).",
+      "en": "All services big and colourful at a glance – ideal for a second screen or a tablet on the wall. One click restarts what stopped (asks first)."
+    }
   },
   "widget": {
     "title": {
