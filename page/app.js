@@ -1,6 +1,5 @@
 // Status Wall – page. Restarting goes through Hostwerk, which asks the user before anything changes.
 const { html, t } = Hostwerk;
-const KINDS = ['web', 'db', 'minecraft', 'app', 'mail'];
 const STATE_CLASS = { running: 'hw-ok', error: 'hw-err', starting: 'hw-warn', stopping: 'hw-warn' };
 
 function tile(s) {
@@ -19,18 +18,15 @@ function tile(s) {
 async function load() {
   const settings = await Hostwerk.settings.get();
   document.body.className = `size-${settings.size || 'normal'}`;
-  let all = await Hostwerk.services();
-  const running = all.filter((s) => s.state === 'running').length;
-  const problems = all.filter((s) => s.state === 'error').length;
+  const all = await Hostwerk.services();
+  const { running, problems } = StatusWall.summary(all);
   document.getElementById('sub').textContent = t('summary', { up: running, all: all.length });
   Hostwerk.render('#summary', html`
     <div class="hw-card hw-stat"><div class="hw-k">${t('running')}</div><div class="hw-v">${running}</div></div>
     <div class="hw-card hw-stat"><div class="hw-k">${t('stopped')}</div><div class="hw-v">${all.length - running - problems}</div></div>
     <div class="hw-card hw-stat"><div class="hw-k">${t('problems')}</div><div class="hw-v">${problems}</div></div>`);
-  if (!settings.showStopped) all = all.filter((s) => s.state !== 'stopped');
-  if (!all.length) return Hostwerk.render('#groups', html`<div class="hw-card hw-empty"><b>${t('empty')}</b>${t('emptyHint')}</div>`);
-  const order = (a, b) => (a.state === 'error' ? -1 : 0) - (b.state === 'error' ? -1 : 0) || a.name.localeCompare(b.name);
-  const groups = settings.group ? KINDS.map((k) => [k, all.filter((s) => s.kind === k).sort(order)]).filter(([, xs]) => xs.length) : [[null, all.sort(order)]];
+  const groups = StatusWall.groups(all, { group: settings.group !== false, showStopped: settings.showStopped !== false });
+  if (!groups.length) return Hostwerk.render('#groups', html`<div class="hw-card hw-empty"><b>${t('empty')}</b>${t('emptyHint')}</div>`);
   Hostwerk.render('#groups', html`${groups.map(([k, xs]) => html`<section>${k ? html`<h2>${t(`group.${k}`)}</h2>` : ''}<div class="hw-grid">${xs.map(tile)}</div></section>`)}`);
 }
 
