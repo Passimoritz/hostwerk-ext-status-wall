@@ -1,3 +1,5 @@
+![Status-Wand](banner.svg)
+
 # Status-Wand
 
 [English](README.md) · **Deutsch**
