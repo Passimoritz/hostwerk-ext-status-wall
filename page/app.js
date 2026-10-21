@@ -1,4 +1,5 @@
-// Status Wall – page. Starting, stopping and restarting go through Hostwerk, which asks the user before anything changes.
+// Status Wall – page. Starting, stopping and restarting go through Hostwerk, which asks the user before anything changes –
+// game servers too (SDK 2.10: control:services covers them). The kiosk wall without sign-in is page/kiosk.html (/v/status-wall/).
 const { html, t } = Hostwerk;
 const W = StatusWall;
 const STATE_CLASS = { running: 'ok', error: 'err', starting: 'warn', stopping: 'warn' };
@@ -68,8 +69,18 @@ async function render() {
     <div class="card card-pad stat"><div class="k">${t('problems')}</div><div class="v">${Hostwerk.fmt.number(sum.problems)}</div></div>
     ${failed ? html`<div class="callout warn"><div class="callout-body">${t('refreshFailed')} <button type="button" class="btn xs" data-act="retry">${t('retry')}</button></div></div>` : ''}`);
   const groups = W.groups(all, { group: settings.group !== false, showStopped: settings.showStopped !== false });
+  drawKiosk(settings);
   if (!groups.length) return Hostwerk.render('#groups', html`<div class="card card-pad empty"><b>${t('empty')}</b>${t('emptyHint')}</div>`);
   Hostwerk.render('#groups', html`${groups.map(([k, xs]) => html`<section>${k ? html`<h2>${t(`group.${k}`)}</h2>` : ''}<div class="grid-auto">${xs.map(tile)}</div></section>`)}`);
+  return undefined;
+}
+
+/** Address of the kiosk wall (public view) – for a second screen or a tablet, without Hostwerk around it. */
+const kioskUrl = () => { let origin = ''; try { origin = new URL(document.referrer).origin; } catch { /* Adresse steht auch in der Detailansicht der Erweiterung */ } return `${origin}/v/status-wall/`; };
+function drawKiosk(settings) {
+  Hostwerk.render('#kiosk', html`<div class="card card-pad stack"><b>${t('kioskTitle')}</b>${settings.kiosk
+    ? html`<div class="row-tight"><code class="grow ellipsis">${kioskUrl()}</code><button type="button" class="btn sm" data-act="copy-kiosk">${t('copyLink')}</button></div><p class="muted small">${t('kioskHint')}</p>`
+    : html`<p class="muted small">${t('kioskOff')}</p><div><button type="button" class="btn sm" data-act="settings">${t('settings')}</button></div>`}</div>`);
 }
 
 document.addEventListener('click', async (e) => {
@@ -77,6 +88,8 @@ document.addEventListener('click', async (e) => {
   if (!b) return;
   const act = b.dataset.act;
   if (act === 'retry') return load();
+  if (act === 'copy-kiosk') return Hostwerk.copy(kioskUrl()).catch(() => {});
+  if (act === 'settings') return Hostwerk.settings.open().catch(() => {});
   if (act === 'open') return Hostwerk.navigate(`${ROUTE[b.dataset.kind] || '/'}${b.dataset.id}`);
   b.disabled = true;
   try {

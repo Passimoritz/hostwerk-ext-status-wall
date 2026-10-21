@@ -1,3 +1,9 @@
+## 1.4.0
+
+- Kiosk wall without sign-in: own address `/v/status-wall/` (permission `share:view`) for a second screen or a tablet – without Hostwerk around it, read only (no buttons), with a full screen button, light/dark and three sizes (`?theme=light`, `?size=compact|wall`, `?stopped=0`, `?group=0`, `?lang=de`). Off until you switch on “Share the kiosk wall without sign-in”; it shows names and state, no ports, paths or addresses. / Kiosk-Wand ohne Anmeldung: eigene Adresse `/v/status-wall/` (Recht `share:view`) für den zweiten Bildschirm oder das Tablet – ohne Hostwerk drumherum, nur lesend (ohne Knöpfe), mit Vollbild-Knopf, hell/dunkel und drei Größen. Aus, bis du „Kiosk-Wand ohne Anmeldung freigeben“ einschaltest; sie zeigt Namen und Zustand, keine Ports, Pfade oder Adressen.
+- Game servers can be started, stopped and restarted right on the wall (Hostwerk asks first, SDK 2.10 `control:services`); “Open” still leads to their page. / Spiele-Server lassen sich direkt auf der Wand starten, stoppen und neu starten (Hostwerk fragt vorher); „Öffnen“ führt weiter zu ihrer Seite.
+- Needs Hostwerk 3.0 (SDK 3.0). / Braucht Hostwerk 3.0 (SDK 3.0).
+
 ## 1.3.0
 
 - Game servers appear (own group, "Open" leads to their page); the mail catcher has a fixed id. / Spiele-Server erscheinen.

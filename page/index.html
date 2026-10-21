@@ -22,6 +22,7 @@
     body.size-compact .grid-auto { --hw-min: 190px; } body.size-compact .tile .name { font-size: var(--fs-md, 14px); }
     body.size-wall .grid-auto { --hw-min: 300px; } body.size-wall .tile { padding: var(--sp-6, 24px); } body.size-wall .tile .name { font-size: var(--fs-2xl, 24px); }
     .clock { font-size: var(--fs-3xl, 28px); font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .kiosk-card { margin-top: var(--sp-5, 20px); }
     @media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
   </style>
 </head>
@@ -32,6 +33,7 @@
   </div>
   <div class="summary" id="summary"></div>
   <div id="groups" class="stack"><div class="hw-skeleton" style="height: calc(var(--sp-8, 32px) * 4)"></div></div>
+  <div id="kiosk" class="kiosk-card"></div>
   <script src="lib.js"></script>
   <script src="app.js"></script>
 </body>

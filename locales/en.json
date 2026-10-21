@@ -52,5 +52,10 @@
   "stale": "As of {time} – refreshing doesn’t work right now",
   "retry": "Try again",
   "widgetFailed": "Not reachable right now.",
-  "widgetBusy": "{n} changing"
+  "widgetBusy": "{n} changing",
+  "kioskTitle": "Kiosk wall without Hostwerk",
+  "kioskHint": "Open it in the browser of the second screen or tablet – read only, with a full screen button. Options: ?theme=light, ?size=compact or ?size=wall, ?stopped=0, ?group=0, ?lang=de.",
+  "kioskOff": "For a second screen or a tablet there is an own address without sign-in. Switch on “Share the kiosk wall without sign-in” in the settings – then anyone with the address sees names and state of your services (no ports or addresses, no buttons).",
+  "copyLink": "Copy address",
+  "settings": "Settings"
 }

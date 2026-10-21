@@ -6,10 +6,10 @@
     "en": "Status Wall"
   },
   "description": {
-    "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Ideal für einen zweiten Bildschirm oder das Tablet an der Wand. Starten, Stoppen und Neustarten mit Rückfrage.",
-    "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Ideal for a second screen or a tablet on the wall. Start, stop and restart (asks first)."
+    "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Starten, Stoppen und Neustarten mit Rückfrage – jetzt auch für Spiele-Server. Dazu eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
+    "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Start, stop and restart (asks first) – now for game servers too. Plus a kiosk wall with its own address for a second screen or a tablet on the wall."
   },
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "Hostwerk",
   "homepage": "https://github.com/Passimoritz/hostwerk-ext-status-wall",
   "license": "MIT",
@@ -17,13 +17,24 @@
   "banner": "banner.svg",
   "color": "#0ea5e9",
   "category": "monitoring",
-  "hostwerk": ">=2.9.0",
+  "hostwerk": ">=3.0.0",
+  "sdkVersion": "3.0",
   "permissions": [
     "read:services",
     "control:services",
     "read:system",
-    "read:live"
+    "read:live",
+    "share:view",
+    "native"
   ],
+  "backend": "server/index.js",
+  "publicView": {
+    "file": "page/kiosk.html",
+    "title": {
+      "de": "Kiosk-Wand",
+      "en": "Kiosk wall"
+    }
+  },
   "page": {
     "title": {
       "de": "Status-Wand",
@@ -32,8 +43,8 @@
     "icon": "monitor",
     "file": "page/index.html",
     "description": {
-      "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Ideal für einen zweiten Bildschirm oder das Tablet an der Wand. Starten, Stoppen und Neustarten mit Rückfrage.",
-      "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Ideal for a second screen or a tablet on the wall. Start, stop and restart (asks first)."
+      "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Starten, Stoppen und Neustarten mit Rückfrage – jetzt auch für Spiele-Server. Dazu eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
+      "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Start, stop and restart (asks first) – now for game servers too. Plus a kiosk wall with its own address for a second screen or a tablet on the wall."
     },
     "nav": {
       "group": "monitoring",
@@ -101,6 +112,15 @@
           }
         }
       ]
+    },
+    {
+      "key": "kiosk",
+      "type": "switch",
+      "label": {
+        "de": "Kiosk-Wand ohne Anmeldung freigeben (eigene Adresse, nur lesend – zeigt Namen und Zustand der Dienste)",
+        "en": "Share the kiosk wall without sign-in (own address, read only – shows names and state of the services)"
+      },
+      "default": false
     }
   ],
   "contributes": {

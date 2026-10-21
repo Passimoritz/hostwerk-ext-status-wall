@@ -22,7 +22,7 @@ test('„startet“ und „stoppt“ zählen nicht als gestoppt', () => {
 
 test('Übersicht: Spiele-Server als eigene Gruppe, Mail-Fänger mit fester ID', () => {
   const list = W.fromOverview({ web: [{ id: 'w', name: 'Web', port: 80, proc: { state: 'running', startedAt: 5 } }], games: [{ id: 'v', name: 'Valheim', running: true, game: 'valheim' }], mail: { config: { smtpPort: 1025 }, proc: { state: 'stopped' } } });
-  assert.deepStrictEqual(list.map((s) => [s.kind, s.id, s.state, s.control]), [['web', 'w', 'running', true], ['game', 'v', 'running', false], ['mail', 'mail', 'stopped', true]]);
+  assert.deepStrictEqual(list.map((s) => [s.kind, s.id, s.state, s.control]), [['web', 'w', 'running', true], ['game', 'v', 'running', true], ['mail', 'mail', 'stopped', true]]);
   assert.deepStrictEqual(W.groups(list).map(([k]) => k), ['web', 'game', 'mail']);
   assert.deepStrictEqual(W.groups([{ kind: 'neu', name: 'X', state: 'running' }]).map(([k]) => k), ['other']);
   assert.deepStrictEqual(W.fromOverview(null), []);
@@ -33,6 +33,8 @@ test('Knöpfe: Stoppen für laufende, Öffnen für Spiele-Server, nichts im Wech
   assert.deepStrictEqual(W.actions({ control: true, state: 'error' }), ['start']);
   assert.deepStrictEqual(W.actions({ control: true, state: 'starting' }), []);
   assert.deepStrictEqual(W.actions({ control: false, state: 'running' }), ['open']);
+  assert.deepStrictEqual(W.actions({ kind: 'game', control: true, state: 'running' }), ['restart', 'stop', 'open'], 'game servers: control plus their own page');
+  assert.deepStrictEqual(W.actions({ kind: 'game', control: true, state: 'stopped' }), ['start', 'open']);
 });
 
 test('Verlauf je Dienst und Mini-Linie', () => {

@@ -8,8 +8,8 @@
   const BUSY = ['starting', 'stopping'];
 
   /**
-   * Alle Dienste aus GET /overview – wie Hostwerk.services(), aber auch Spiele-Server (nur „läuft ja/nein“ bekannt,
-   * steuerbar nur auf ihrer eigenen Seite) und der Mail-Fänger mit fester ID.
+   * Alle Dienste aus GET /overview – wie Hostwerk.services(), aber auch Spiele-Server (nur „läuft ja/nein“ bekannt;
+   * steuerbar seit SDK 2.10 über Hostwerk.service('game', id) mit dem Recht control:services) und der Mail-Fänger mit fester ID.
    */
   function fromOverview(o) {
     const x = o || {};
@@ -19,7 +19,7 @@
     }));
     return [
       ...pick('web', x.web), ...pick('db', x.db), ...pick('minecraft', x.minecraft),
-      ...(Array.isArray(x.games) ? x.games : []).filter(Boolean).map((g) => ({ kind: 'game', id: String(g.id), name: g.name || String(g.id), state: g.running ? 'running' : 'stopped', port: null, memory: null, startedAt: null, extra: { game: g.game || null }, control: false })),
+      ...(Array.isArray(x.games) ? x.games : []).filter(Boolean).map((g) => ({ kind: 'game', id: String(g.id), name: g.name || String(g.id), state: g.running ? 'running' : 'stopped', port: null, memory: null, startedAt: null, extra: { game: g.game || null }, control: true })),
       ...pick('app', x.apps),
       ...(x.mail ? pick('mail', [{ ...x.mail, id: 'mail', name: 'Mail', port: x.mail.config ? x.mail.config.smtpPort : null }]) : []),
     ];
@@ -46,11 +46,15 @@
     return [...known, ['other', other]].filter(([, xs]) => xs.length);
   }
 
-  /** Welche Knöpfe eine Kachel hat: Spiele-Server nur „Öffnen“, im Wechsel keine. */
+  /**
+   * Welche Knöpfe eine Kachel hat: im Wechsel keine; Spiele-Server zusätzlich „Öffnen“ (Konsole, Spieler auf ihrer Seite).
+   * Ohne Steuerung (control: false) nur „Öffnen“.
+   */
   function actions(s) {
     if (!s.control) return ['open'];
     if (BUSY.includes(s.state)) return [];
-    return s.state === 'running' ? ['restart', 'stop'] : ['start'];
+    const base = s.state === 'running' ? ['restart', 'stop'] : ['start'];
+    return s.kind === 'game' ? [...base, 'open'] : base;
   }
 
   /** Schlüssel eines Dienstes in /system/resources (procs[].id). */
@@ -88,5 +92,24 @@
     return null;
   }
 
-  return { KINDS, BUSY, fromOverview, summary, groups, actions, procKey, histories, sparkPoints, reachability };
+  /**
+   * Kiosk-Wand ohne Anmeldung (/v/status-wall/, Recht share:view): nur lesend und nur, was eine Wand zeigt –
+   * Art, Name, Zustand, seit wann, Spielerzahl, Erreichbarkeit, Mini-Verlauf. Keine Kennungen, Ports, Pfade oder Adressen.
+   * → { at, services: [{ key, kind, name, state, startedAt, players, game, reach, cpu, mem }] }
+   */
+  function publicWall(all, hist, checks, now = Date.now()) {
+    const services = (all || []).map((s, i) => {
+      const h = (hist || {})[procKey(s)] || [];
+      const reach = s.state === 'running' ? reachability(s, checks) : null;
+      return {
+        key: `${s.kind}-${i}`, kind: KINDS.includes(s.kind) ? s.kind : 'other', name: String(s.name), state: s.state, startedAt: s.state === 'running' ? s.startedAt || null : null,
+        players: Array.isArray(s.extra && s.extra.players) ? s.extra.players.length : null, game: (s.extra && s.extra.game) || null,
+        reach: reach ? { ok: reach.ok === undefined ? null : reach.ok } : null,
+        cpu: h.map((x) => Math.round(x.cpu * 10) / 10), mem: h.map((x) => x.memory),
+      };
+    });
+    return { at: now, services };
+  }
+
+  return { KINDS, BUSY, fromOverview, summary, groups, actions, procKey, histories, sparkPoints, reachability, publicWall };
 }));

@@ -52,5 +52,10 @@
   "stale": "Stand {time} – Aktualisieren klappt gerade nicht",
   "retry": "Erneut versuchen",
   "widgetFailed": "Gerade nicht erreichbar.",
-  "widgetBusy": "{n} im Wechsel"
+  "widgetBusy": "{n} im Wechsel",
+  "kioskTitle": "Kiosk-Wand ohne Hostwerk",
+  "kioskHint": "Im Browser des zweiten Bildschirms oder Tablets öffnen – nur lesend, mit Vollbild-Knopf. Zusätze: ?theme=light, ?size=compact oder ?size=wall, ?stopped=0, ?group=0, ?lang=de.",
+  "kioskOff": "Für einen zweiten Bildschirm oder ein Tablet gibt es eine eigene Adresse ohne Anmeldung. Schalte dafür in den Einstellungen „Kiosk-Wand ohne Anmeldung freigeben“ ein – dann sieht jeder mit der Adresse Namen und Zustand deiner Dienste (ohne Ports oder Adressen, ohne Knöpfe).",
+  "copyLink": "Adresse kopieren",
+  "settings": "Einstellungen"
 }
