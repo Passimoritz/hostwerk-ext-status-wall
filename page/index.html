@@ -1,31 +1,37 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="/ext-sdk.js"></script>
   <style>
-    .summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    /* Größen aus Hostwerks Design-Skala (mit Rückfall für ältere Hostwerk-Versionen) */
+    .summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3, 12px); margin-bottom: var(--sp-5, 20px); }
     .tile { border-width: 2px; transition: border-color .2s, transform .15s; }
     .tile.running { border-color: color-mix(in srgb, var(--ok) 55%, var(--hw-line)); }
     .tile.error { border-color: color-mix(in srgb, var(--err) 60%, var(--hw-line)); }
     .tile.stopped { border-style: dashed; } /* ohne Durchsichtigkeit – Kontrast bleibt */
-    .tile .kind { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-    .tile .name { font-size: 18px; font-weight: 700; margin: 4px 0 6px; }
-    .tile .meta { font-size: 12.5px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
-    .tile .actions { margin-top: 12px; display: flex; gap: 6px; }
-    body.size-compact .grid-auto { --hw-min: 190px; } body.size-compact .tile .name { font-size: 15px; }
-    body.size-wall .grid-auto { --hw-min: 300px; } body.size-wall .tile { padding: 24px; } body.size-wall .tile .name { font-size: 26px; }
-    .clock { font-size: 28px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .tile .kind { font-size: var(--fs-2xs, 11px); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .tile .name { font-size: var(--fs-lg, 16px); font-weight: 700; margin: var(--sp-1, 4px) 0 var(--sp-2, 8px); }
+    .tile .meta { font-size: var(--fs-xs, 12px); color: var(--muted); display: flex; gap: var(--sp-3, 12px); flex-wrap: wrap; margin-top: var(--sp-2, 8px); }
+    .tile .actions { margin-top: var(--sp-3, 12px); display: flex; gap: var(--sp-2, 8px); flex-wrap: wrap; }
+    .spark { display: block; width: 100%; height: var(--sp-6, 24px); margin-top: var(--sp-2, 8px); }
+    .spark polyline { fill: none; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+    .spark-cpu { stroke: var(--accent-2, var(--accent)); }
+    .spark-mem { stroke: var(--muted); stroke-dasharray: 3 2; }
+    body.size-compact .grid-auto { --hw-min: 190px; } body.size-compact .tile .name { font-size: var(--fs-md, 14px); }
+    body.size-wall .grid-auto { --hw-min: 300px; } body.size-wall .tile { padding: var(--sp-6, 24px); } body.size-wall .tile .name { font-size: var(--fs-2xl, 24px); }
+    .clock { font-size: var(--fs-3xl, 28px); font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    @media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
   </style>
 </head>
 <body>
   <div class="row">
-    <div class="grow"><p class="muted" id="sub" data-i18n="loading"></p></div>
+    <div class="grow"><p class="muted" id="sub" aria-live="polite" data-i18n="loading"></p></div>
     <div class="clock" id="clock"></div>
   </div>
   <div class="summary" id="summary"></div>
-  <div id="groups" class="stack"><div class="hw-skeleton" style="height:120px"></div></div>
+  <div id="groups" class="stack"><div class="hw-skeleton" style="height: calc(var(--sp-8, 32px) * 4)"></div></div>
   <script src="lib.js"></script>
   <script src="app.js"></script>
 </body>

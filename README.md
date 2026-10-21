@@ -4,7 +4,7 @@
 
 **English** · [Deutsch](README.de.md)
 
-All services big and colourful at a glance – ideal for a second screen or a tablet on the wall. One click starts or restarts a service (Hostwerk asks first).
+All services big and colourful at a glance – ideal for a second screen or a tablet on the wall. One click starts, stops or restarts a service (Hostwerk asks first).
 
 | Dark | Light |
 |---|---|
@@ -12,9 +12,13 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 
 ## Features
 
-- Every web server, database, Minecraft server, app and the mail catcher as a tile
-- Running / stopped / problems at the top, problems first
-- Start and restart with confirmation
+- Every web server, database, Minecraft and game server, app and the mail catcher as a tile (game servers open their own page)
+- Running / changing / stopped / problems at the top, problems first – “starting” no longer counts as stopped
+- Start, stop and restart with confirmation
+- Reachability from the uptime checks next to the process state (“running, but not reachable”)
+- Small CPU and memory history per tile (with a text alternative)
+- Clear error state with “Try again”; refreshes only while the page is visible
+- Own “Monitoring” area in the sidebar, shortcut Ctrl+Alt+W
 - Grouping, hide stopped services, three tile sizes (incl. “wall”)
 - Dashboard tile with a ring: how many services run
 - German and English, light and dark mode
@@ -27,7 +31,9 @@ Or manually: download `status-wall-1.0.0.zip` from the [latest release](../../re
 ## Permissions
 
 - `read:services` – see services
-- `control:services` – start/restart, **Hostwerk asks every time**
+- `control:services` – start/stop/restart, **Hostwerk asks every time**
+- `read:system` – load per service for the small history
+- `read:live` – results of the uptime checks
 
 Runs sandboxed in Hostwerk – no access to logins, settings or files.
 
