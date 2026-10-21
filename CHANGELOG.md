@@ -1,3 +1,7 @@
+## 1.5.0
+
+- Lives where it belongs: Go live → Operate → Status wall and the dashboard tile – no own sidebar entry any more (Hostwerk 3.0+); the full page stays under Extensions → Open and can be pinned in the sidebar settings. / Steckt jetzt dort, wo sie hingehört: Livebetrieb → Betrieb → Status-Wand und Übersichtskachel – kein eigener Seitenleisten-Eintrag mehr (Hostwerk 3.0+); die ganze Seite bleibt unter Erweiterungen → Öffnen und lässt sich in den Seitenleisten-Einstellungen anheften.
+
 ## 1.4.0
 
 - Kiosk wall without sign-in: own address `/v/status-wall/` (permission `share:view`) for a second screen or a tablet – without Hostwerk around it, read only (no buttons), with a full screen button, light/dark and three sizes (`?theme=light`, `?size=compact|wall`, `?stopped=0`, `?group=0`, `?lang=de`). Off until you switch on “Share the kiosk wall without sign-in”; it shows names and state, no ports, paths or addresses. / Kiosk-Wand ohne Anmeldung: eigene Adresse `/v/status-wall/` (Recht `share:view`) für den zweiten Bildschirm oder das Tablet – ohne Hostwerk drumherum, nur lesend (ohne Knöpfe), mit Vollbild-Knopf, hell/dunkel und drei Größen. Aus, bis du „Kiosk-Wand ohne Anmeldung freigeben“ einschaltest; sie zeigt Namen und Zustand, keine Ports, Pfade oder Adressen.

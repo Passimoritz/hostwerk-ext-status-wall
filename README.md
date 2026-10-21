@@ -18,7 +18,7 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 - Reachability from the uptime checks next to the process state (“running, but not reachable”)
 - Small CPU and memory history per tile (with a text alternative)
 - Clear error state with “Try again”; refreshes only while the page is visible
-- Own “Monitoring” area in the sidebar, shortcut Ctrl+Alt+W
+- In Go live → Operate → Status wall (no own sidebar entry since 1.5), shortcut Ctrl+Alt+W
 - Grouping, hide stopped services, three tile sizes (incl. “wall”)
 - Dashboard tile with a ring: how many services run
 - Kiosk wall without sign-in (`/v/status-wall/`) for a second screen or a tablet: read only, full screen button, `?theme=light`, `?size=compact|wall`, `?stopped=0`, `?group=0`, `?lang=de` – only after you switch on “Share the kiosk wall without sign-in”; no ports, paths or addresses

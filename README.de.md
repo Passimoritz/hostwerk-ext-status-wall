@@ -16,7 +16,7 @@ Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bilds
 - Erreichbarkeit aus der Uptime-Prüfung neben dem Prozesszustand („läuft, aber nicht erreichbar“)
 - Mini-Verlauf von CPU und Arbeitsspeicher je Kachel (mit Textalternative)
 - Deutlicher Fehlerzustand mit „Erneut versuchen“; nachgeladen wird nur, solange die Seite sichtbar ist
-- Eigener Bereich „Überwachung“ in der Seitenleiste, Kürzel Strg+Alt+W
+- Im Livebetrieb → Betrieb → Status-Wand (seit 1.5 ohne eigenen Seitenleisten-Eintrag), Kürzel Strg+Alt+W
 - Gruppen, gestoppte ausblenden, drei Kachelgrößen (auch „Wand“)
 - Kachel mit Ring für die Übersicht: wie viele Dienste laufen
 - Kiosk-Wand ohne Anmeldung (`/v/status-wall/`) für den zweiten Bildschirm oder das Tablet: nur lesend, Vollbild-Knopf, `?theme=light`, `?size=compact|wall`, `?stopped=0`, `?group=0`, `?lang=de` – erst, wenn du „Kiosk-Wand ohne Anmeldung freigeben“ einschaltest; ohne Ports, Pfade oder Adressen
