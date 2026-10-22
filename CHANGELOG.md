@@ -1,3 +1,7 @@
+## 1.5.1
+
+- Progress reads “Lädt …” in German like everywhere in Hostwerk. / Fortschritt heißt auf Deutsch „Lädt …“ wie überall in Hostwerk.
+
 ## 1.5.0
 
 - Lives where it belongs: Go live → Operate → Status wall and the dashboard tile – no own sidebar entry any more (Hostwerk 3.0+); the full page stays under Extensions → Open and can be pinned in the sidebar settings. / Steckt jetzt dort, wo sie hingehört: Livebetrieb → Betrieb → Status-Wand und Übersichtskachel – kein eigener Seitenleisten-Eintrag mehr (Hostwerk 3.0+); die ganze Seite bleibt unter Erweiterungen → Öffnen und lässt sich in den Seitenleisten-Einstellungen anheften.

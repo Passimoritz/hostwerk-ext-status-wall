@@ -1,6 +1,6 @@
 {
   "title": "Status-Wand",
-  "loading": "Lade …",
+  "loading": "Lädt …",
   "summary": "{up} von {all} Diensten laufen",
   "running": "Laufen",
   "stopped": "Gestoppt",

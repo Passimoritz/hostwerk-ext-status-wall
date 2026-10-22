@@ -9,7 +9,7 @@
     "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Starten, Stoppen und Neustarten mit Rückfrage – jetzt auch für Spiele-Server. Dazu eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
     "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Start, stop and restart (asks first) – now for game servers too. Plus a kiosk wall with its own address for a second screen or a tablet on the wall."
   },
-  "version": "1.5.0",
+  "version": "1.5.1",
   "author": "Hostwerk",
   "homepage": "https://github.com/Passimoritz/hostwerk-ext-status-wall",
   "license": "MIT",
