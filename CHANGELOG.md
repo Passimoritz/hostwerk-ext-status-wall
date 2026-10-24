@@ -1,3 +1,7 @@
+## 1.5.2
+
+- New animated icon and banner in the common Hostwerk style (isometric block). / Neues animiertes Symbol und Banner im gemeinsamen Hostwerk-Stil (isometrischer Block).
+
 ## 1.5.1
 
 - Progress reads “Lädt …” in German like everywhere in Hostwerk. / Fortschritt heißt auf Deutsch „Lädt …“ wie überall in Hostwerk.
