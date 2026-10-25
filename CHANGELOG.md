@@ -1,3 +1,7 @@
+## 1.6.0
+
+- Hostwerk’s animations (SDK 3.6): the numbers at the top count to their new value, the tiles rise one after another the first time, and services that are starting or stopping pulse gently. Everything stops with “Reduce animations”; older Hostwerk versions show it as before. / Hostwerks Animationen (SDK 3.6): Die Zahlen oben zählen zum neuen Wert, die Kacheln erscheinen beim ersten Mal nacheinander, startende und stoppende Dienste pulsieren sanft. Alles ruht bei „Animationen reduzieren“; ältere Hostwerk-Versionen zeigen es wie bisher.
+
 ## 1.5.2
 
 - New animated icon and banner in the common Hostwerk style (isometric block). / Neues animiertes Symbol und Banner im gemeinsamen Hostwerk-Stil (isometrischer Block).

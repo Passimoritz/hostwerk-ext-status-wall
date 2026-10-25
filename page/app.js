@@ -6,6 +6,12 @@ const STATE_CLASS = { running: 'ok', error: 'err', starting: 'warn', stopping: '
 const ROUTE = { game: '/spiele/' };
 let data = null; // { all, hist, checks, at } – zuletzt geladen; bleibt bei Fehlern stehen
 let failed = false;
+// Bewegung wie in Hostwerk (SDK 3.6): Zahlen zählen zum neuen Wert, Kacheln erscheinen beim ersten Mal nacheinander.
+// Ältere Hostwerk-Versionen kennen countUp und die hw-*-Klassen nicht – dann steht der Wert einfach da.
+const shown = {};
+let firstTiles = true;
+const counter = (key, n) => { const from = Hostwerk.ui.countUp ? (shown[key] || 0) : n; return html`<div class="v" data-count="${key}" data-hw-count="${from}">${Hostwerk.fmt.number(from)}</div>`; };
+function countAll(values) { for (const [k, n] of Object.entries(values)) { const el = document.querySelector(`[data-count="${k}"]`); if (el && Hostwerk.ui.countUp) Hostwerk.ui.countUp(el, n); shown[k] = n; } }
 
 /** Mini-Verlauf: CPU (Linie in Akzentfarbe) und Arbeitsspeicher (zweite Linie), mit Textalternative. */
 function spark(s) {
@@ -29,7 +35,7 @@ function tile(s) {
     <div class="kind">${t(`kind.${s.kind}`)}</div>
     <div class="name ellipsis">${s.name}</div>
     <div class="row-tight" style="flex-wrap: wrap">
-      <span class="badge ${STATE_CLASS[s.state] || ''}"><span class="dot ${STATE_CLASS[s.state] || ''}"></span>${t(`state.${s.state}`)}</span>
+      <span class="badge ${STATE_CLASS[s.state] || ''}"><span class="dot ${STATE_CLASS[s.state] || ''}${s.state === 'starting' || s.state === 'stopping' ? ' hw-pulse' : ''}"></span>${t(`state.${s.state}`)}</span>
       ${reach ? html`<span class="badge ${reach.ok === false ? 'err' : reach.ok ? 'ok' : ''}" title="${t('reachHint', { name: reach.name })}">${t(reach.ok === false ? 'unreachable' : reach.ok ? 'reachable' : 'reachUnknown')}</span>` : ''}
     </div>
     <div class="meta">${up ? html`<span>${t('uptime', { time: up })}</span>` : ''}${s.port ? html`<span>${t('port', { port: s.port })}</span>` : ''}${s.memory ? html`<span>${Hostwerk.fmt.bytes(s.memory)}</span>` : ''}${s.extra.players ? html`<span>${t('players', { n: Hostwerk.fmt.number(s.extra.players.length) })}</span>` : ''}</div>
@@ -63,15 +69,17 @@ async function render() {
   const sum = W.summary(all);
   document.getElementById('sub').textContent = failed ? t('stale', { time: Hostwerk.fmt.time(data.at) }) : t('summary', { up: sum.running, all: sum.total });
   Hostwerk.render('#summary', html`
-    <div class="card card-pad stat"><div class="k">${t('running')}</div><div class="v">${Hostwerk.fmt.number(sum.running)}</div></div>
-    <div class="card card-pad stat"><div class="k">${t('busy')}</div><div class="v">${Hostwerk.fmt.number(sum.busy)}</div></div>
-    <div class="card card-pad stat"><div class="k">${t('stopped')}</div><div class="v">${Hostwerk.fmt.number(sum.stopped)}</div></div>
-    <div class="card card-pad stat"><div class="k">${t('problems')}</div><div class="v">${Hostwerk.fmt.number(sum.problems)}</div></div>
+    <div class="card card-pad stat"><div class="k">${t('running')}</div>${counter('running', sum.running)}</div>
+    <div class="card card-pad stat"><div class="k">${t('busy')}</div>${counter('busy', sum.busy)}</div>
+    <div class="card card-pad stat"><div class="k">${t('stopped')}</div>${counter('stopped', sum.stopped)}</div>
+    <div class="card card-pad stat"><div class="k">${t('problems')}</div>${counter('problems', sum.problems)}</div>
     ${failed ? html`<div class="callout warn"><div class="callout-body">${t('refreshFailed')} <button type="button" class="btn xs" data-act="retry">${t('retry')}</button></div></div>` : ''}`);
+  countAll({ running: sum.running, busy: sum.busy, stopped: sum.stopped, problems: sum.problems });
   const groups = W.groups(all, { group: settings.group !== false, showStopped: settings.showStopped !== false });
   drawKiosk(settings);
   if (!groups.length) return Hostwerk.render('#groups', html`<div class="card card-pad empty"><b>${t('empty')}</b>${t('emptyHint')}</div>`);
-  Hostwerk.render('#groups', html`${groups.map(([k, xs]) => html`<section>${k ? html`<h2>${t(`group.${k}`)}</h2>` : ''}<div class="grid-auto">${xs.map(tile)}</div></section>`)}`);
+  Hostwerk.render('#groups', html`${groups.map(([k, xs]) => html`<section>${k ? html`<h2>${t(`group.${k}`)}</h2>` : ''}<div class="grid-auto${firstTiles ? ' hw-stagger' : ''}">${xs.map(tile)}</div></section>`)}`);
+  firstTiles = false;
   return undefined;
 }
 
