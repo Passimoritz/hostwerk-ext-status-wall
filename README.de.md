@@ -4,11 +4,13 @@
 
 [English](README.md) · **Deutsch**
 
+Offizielle [Hostwerk](https://github.com/Passimoritz/hostwerk-public)-Erweiterung (läuft abgeschottet, ab Hostwerk 3.0)
+
 Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bildschirm oder das Tablet an der Wand. Ein Klick startet, stoppt oder startet neu (Hostwerk fragt vorher).
 
 ![Ansicht](docs/status-wall-de-dark.png)
 
-## Funktionen
+## Was sie kann
 
 - Jeder Webserver, jede Datenbank, Minecraft- und Spiele-Server, App und der Mail-Fänger als Kachel (Spiele-Server lassen sich auch hier starten und stoppen und öffnen ihre eigene Seite)
 - Laufen / im Wechsel / gestoppt / Probleme oben, Probleme zuerst – „startet“ zählt nicht mehr als gestoppt
@@ -38,8 +40,10 @@ Oder von Hand: `status-wall-1.0.0.zip` aus dem [neuesten Release](../../releases
 
 Läuft in Hostwerk abgeschottet – kein Zugriff auf Anmeldungen, Einstellungen oder Dateien.
 
-## Selbst bauen
+## Entwickeln
 
 Dieses Repository ist auch ein Beispiel für das [Hostwerk-Erweiterungs-SDK](https://github.com/Passimoritz/hostwerk-public/blob/main/sdk/README.de.md): Design-Baukasten, Übersetzungen, Einstellungen, Speicher, Ereignisse, Prüfung und Releases.
 
-Lizenz: MIT
+## Lizenz
+
+MIT

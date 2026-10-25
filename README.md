@@ -2,7 +2,7 @@
 
 # Status Wall
 
-**English** · [Deutsch](README.de.md)
+[Deutsch](README.de.md) · An official [Hostwerk](https://github.com/Passimoritz/hostwerk-public) extension (runs sandboxed, Hostwerk 3.0 or newer)
 
 All services big and colourful at a glance – ideal for a second screen or a tablet on the wall. One click starts, stops or restarts a service (Hostwerk asks first).
 
@@ -10,7 +10,7 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 |---|---|
 | ![dark](docs/status-wall-en-dark.png) | ![light](docs/status-wall-en-light.png) |
 
-## Features
+## What it does
 
 - Every web server, database, Minecraft and game server, app and the mail catcher as a tile (game servers can be started and stopped here too and open their own page)
 - Running / changing / stopped / problems at the top, problems first – “starting” no longer counts as stopped
@@ -40,8 +40,10 @@ Or manually: download `status-wall-1.0.0.zip` from the [latest release](../../re
 
 Runs sandboxed in Hostwerk – no access to logins, settings or files.
 
-## Build your own
+## Develop
 
 This repository is also an example for the [Hostwerk extension SDK](https://github.com/Passimoritz/hostwerk-public/blob/main/sdk/README.md): design kit, translations, settings, storage, events, check and releases.
 
-License: MIT
+## License
+
+MIT
