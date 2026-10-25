@@ -2,7 +2,9 @@
 
 # Status Wall
 
-[Deutsch](README.de.md) · An official [Hostwerk](https://github.com/Passimoritz/hostwerk-public) extension (runs sandboxed, Hostwerk 3.0 or newer)
+> **Since 2.0 this also contains the former “Uptime wall”:** tabs “Reachability” and “Public status page”. Anyone who had the uptime wall gets this version automatically; Hostwerk removes the old one.
+
+[Deutsch](README.de.md) · An official [Hostwerk](https://github.com/Passimoritz/hostwerk-public) extension (runs sandboxed, needs Hostwerk with SDK 3.8)
 
 All services big and colourful at a glance – ideal for a second screen or a tablet on the wall. One click starts, stops or restarts a service (Hostwerk asks first).
 
@@ -12,6 +14,10 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 
 ## What it does
 
+- **Tabs:** Services · Reachability · Public status page – in Go live one tab “Status wall” with these sub tabs
+- **Reachability:** every check from Go live → Monitoring big and colourful, with availability in 24 hours, average response time, outages and history (Ctrl+Alt+U)
+- **Public status page:** visitors see without login whether your services run – only names, state, availability and history; title, text, which checks, own display names, renew the link, optionally write it into a website folder
+- **Kiosk wall** optionally with the uptime checks too (setting, only name, state and availability); the tile shows one line about reachability
 - Every web server, database, Minecraft and game server, app and the mail catcher as a tile (game servers can be started and stopped here too and open their own page)
 - Running / changing / stopped / problems at the top, problems first – “starting” no longer counts as stopped
 - Start, stop and restart with confirmation

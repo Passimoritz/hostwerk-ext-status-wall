@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="/ext-sdk.js"></script>
+  <link rel="stylesheet" href="uptime.css">
   <style>
     /* Größen aus Hostwerks Design-Skala (mit Rückfall für ältere Hostwerk-Versionen) */
     .summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3, 12px); margin-bottom: var(--sp-5, 20px); }
@@ -27,6 +28,7 @@
   </style>
 </head>
 <body>
+  <section data-tab="wall">
   <div class="row">
     <div class="grow"><p class="muted" id="sub" aria-live="polite" data-i18n="loading"></p></div>
     <div class="clock" id="clock"></div>
@@ -34,7 +36,14 @@
   <div class="summary" id="summary"></div>
   <div id="groups" class="stack"><div class="hw-skeleton" style="height: calc(var(--sp-8, 32px) * 4)"></div></div>
   <div id="kiosk" class="kiosk-card"></div>
+  </section>
+  <!-- 2.0: Erreichbarkeit und öffentliche Statusseite (bis 1.5 eigene Erweiterung „Uptime-Wand“) -->
+  <section data-tab="uptime" hidden><div id="up-app"><div class="hw-skeleton" style="height: calc(var(--sp-8, 32px) * 5)"></div></div></section>
+  <section data-tab="public" hidden><div id="pub"><div class="hw-skeleton" style="height: calc(var(--sp-8, 32px) * 5)"></div></div></section>
   <script src="lib.js"></script>
   <script src="app.js"></script>
+  <script src="uptime-lib.js"></script>
+  <script src="uptime.js"></script>
+  <script src="uptime-public.js"></script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+/* Teil „Erreichbarkeit“ (bis 1.5 Uptime-Wand) – nur was Hostwerks Baukasten nicht hat: große Zahl und Verlaufslinie */
+.up-tile { display: flex; flex-direction: column; gap: var(--sp-1, 4px); border-left: 4px solid var(--line); }
+.up-tile.up { border-left-color: var(--ok); }
+.up-tile.down { border-left-color: var(--err); }
+.up-num { font-size: var(--fs-3xl, 28px); font-weight: 700; line-height: 1.1; }
+.up-spark { width: 100%; height: var(--sp-6, 24px); }
+.up-spark polyline { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.up-link code { font-size: var(--fs-xs, 12px); background: var(--surface-2); padding: var(--sp-1, 4px) var(--sp-2, 8px); border-radius: var(--r-sm, 6px); }
+.up-check { flex-wrap: wrap; }

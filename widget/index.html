@@ -21,7 +21,9 @@
     <div><div class="big" id="count" aria-live="polite">–</div><div class="muted small" id="label" data-i18n="servicesRunning"></div></div>
   </div>
   <div id="problems" style="margin-top: var(--sp-2, 8px)"></div>
+  <div id="uptime" class="problem" hidden></div>
   <script src="../page/lib.js"></script>
+  <script src="../page/uptime-lib.js"></script>
   <script>
     const { html, t } = Hostwerk;
     async function load() {
@@ -40,8 +42,20 @@
       Hostwerk.render('#problems', bad.length ? html`${bad.slice(0, 4).map((s) => html`<div class="problem"><span class="dot err"></span>${s.name}</div>`)}`
         : sum.busy ? html`<div class="muted small">${t('widgetBusy', { n: sum.busy })}</div>` : html`<div class="muted small">${t('allGood')}</div>`);
     }
+    // 2.0: eine Zeile Erreichbarkeit (bis 1.5 eigene Kachel der Uptime-Wand) – Einstellung „tileUptime“
+    async function loadUptime() {
+      const box = document.getElementById('uptime');
+      const st = await Hostwerk.settings.get().catch(() => ({}));
+      const d = st.tileUptime === false ? null : await Hostwerk.get('/live/uptime').catch(() => null);
+      const checks = (d && Array.isArray(d.checks)) ? d.checks : [];
+      box.hidden = !checks.length;
+      if (box.hidden) return;
+      const o = Uptime.overall(checks);
+      Hostwerk.render(box, html`<span class="dot ${o.down ? 'err' : 'ok'}"></span>${o.down ? t('up.someDown', { n: o.down }) : t('up.allUp')}`);
+    }
+    const both = () => { load(); loadUptime().catch(() => {}); };
     // Alle 20 s nachladen – nicht, solange die Übersicht verborgen ist
-    Hostwerk.ready().then(() => { load(); Hostwerk.on('service', load); Hostwerk.on('lang', load); setInterval(() => { if (!document.hidden) load(); }, 20000); });
+    Hostwerk.ready().then(() => { both(); Hostwerk.on('service', load); Hostwerk.on('lang', both); Hostwerk.on('settings', both); setInterval(() => { if (!document.hidden) both(); }, 20000); });
   </script>
 </body>
 </html>

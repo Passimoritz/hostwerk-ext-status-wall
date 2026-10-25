@@ -1,3 +1,10 @@
+# Changelog
+
+## 2.0.0
+
+- The former extension "Uptime wall" lives here now (SDK 3.8 `replaces`): new tabs "Reachability" (every uptime check with availability, response time and history) and "Public status page"; Hostwerk installs this version for everyone who had the uptime wall and removes it. Go live has one tab less; the tab there now shows the whole page with its sub tabs. / Die frühere Erweiterung „Uptime-Wand“ steckt jetzt hier (SDK 3.8 `replaces`): neue Reiter „Erreichbarkeit“ (alle Prüfungen mit Verfügbarkeit, Antwortzeit und Verlauf) und „Öffentliche Statusseite“; Hostwerk installiert diese Fassung für alle mit der Uptime-Wand und entfernt sie. Der Livebetrieb hat einen Reiter weniger; der Reiter dort zeigt jetzt die ganze Seite mit Unterreitern.
+- Kiosk wall: optionally also the uptime checks (setting "kioskUptime" – only name, state and availability). Tile: one line about reachability (setting "tileUptime"). Shortcut Ctrl+Alt+U opens "Reachability". / Kiosk-Wand: auf Wunsch auch die Erreichbarkeits-Prüfungen (Einstellung „kioskUptime“ – nur Name, Zustand und Verfügbarkeit). Kachel: eine Zeile Erreichbarkeit (Einstellung „tileUptime“). Strg+Alt+U öffnet „Erreichbarkeit“.
+
 ## 1.6.0
 
 - Hostwerk’s animations (SDK 3.6): the numbers at the top count to their new value, the tiles rise one after another the first time, and services that are starting or stopping pulse gently. Everything stops with “Reduce animations”; older Hostwerk versions show it as before. / Hostwerks Animationen (SDK 3.6): Die Zahlen oben zählen zum neuen Wert, die Kacheln erscheinen beim ersten Mal nacheinander, startende und stoppende Dienste pulsieren sanft. Alles ruht bei „Animationen reduzieren“; ältere Hostwerk-Versionen zeigen es wie bisher.

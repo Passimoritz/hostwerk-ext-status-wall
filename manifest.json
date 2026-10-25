@@ -6,10 +6,10 @@
     "en": "Status Wall"
   },
   "description": {
-    "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Starten, Stoppen und Neustarten mit Rückfrage – jetzt auch für Spiele-Server. Dazu eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
-    "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Start, stop and restart (asks first) – now for game servers too. Plus a kiosk wall with its own address for a second screen or a tablet on the wall."
+    "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher, Starten, Stoppen und Neustarten mit Rückfrage. Dazu alle Erreichbarkeits-Prüfungen mit Verfügbarkeit und Antwortzeit, eine öffentliche Statusseite für deine Besucher und eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
+    "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history, start, stop and restart (asks first). Plus every uptime check with availability and response time, a public status page for your visitors and a kiosk wall with its own address for a second screen or a tablet on the wall."
   },
-  "version": "1.6.0",
+  "version": "2.0.0",
   "author": "Hostwerk",
   "homepage": "https://github.com/Passimoritz/hostwerk-ext-status-wall",
   "license": "MIT",
@@ -18,14 +18,18 @@
   "color": "#0ea5e9",
   "category": "monitoring",
   "hostwerk": ">=3.0.0",
-  "sdkVersion": "3.0",
+  "sdkVersion": "3.8",
+  "replaces": [
+    "uptime-wall"
+  ],
   "permissions": [
     "read:services",
     "control:services",
     "read:system",
     "read:live",
     "share:view",
-    "native"
+    "native",
+    "share:status"
   ],
   "backend": "server/index.js",
   "publicView": {
@@ -43,10 +47,36 @@
     "icon": "monitor",
     "file": "page/index.html",
     "description": {
-      "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher. Starten, Stoppen und Neustarten mit Rückfrage – jetzt auch für Spiele-Server. Dazu eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
-      "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history. Start, stop and restart (asks first) – now for game servers too. Plus a kiosk wall with its own address for a second screen or a tablet on the wall."
+      "de": "Alle Dienste groß und farbig auf einen Blick – auch Spiele-Server, mit Erreichbarkeit und Mini-Verlauf von CPU und Arbeitsspeicher, Starten, Stoppen und Neustarten mit Rückfrage. Dazu alle Erreichbarkeits-Prüfungen mit Verfügbarkeit und Antwortzeit, eine öffentliche Statusseite für deine Besucher und eine Kiosk-Wand mit eigener Adresse für den zweiten Bildschirm oder das Tablet an der Wand.",
+      "en": "All services big and colourful at a glance – game servers included, with reachability and a small CPU and memory history, start, stop and restart (asks first). Plus every uptime check with availability and response time, a public status page for your visitors and a kiosk wall with its own address for a second screen or a tablet on the wall."
     },
-    "nav": false
+    "nav": false,
+    "tabs": [
+      {
+        "id": "wall",
+        "title": {
+          "de": "Dienste",
+          "en": "Services"
+        },
+        "icon": "monitor"
+      },
+      {
+        "id": "uptime",
+        "title": {
+          "de": "Erreichbarkeit",
+          "en": "Reachability"
+        },
+        "icon": "activity"
+      },
+      {
+        "id": "public",
+        "title": {
+          "de": "Öffentliche Statusseite",
+          "en": "Public status page"
+        },
+        "icon": "globe"
+      }
+    ]
   },
   "widget": {
     "title": {
@@ -115,6 +145,24 @@
         "en": "Share the kiosk wall without sign-in (own address, read only – shows names and state of the services)"
       },
       "default": false
+    },
+    {
+      "key": "kioskUptime",
+      "type": "switch",
+      "label": {
+        "de": "Kiosk-Wand: auch die Erreichbarkeits-Prüfungen zeigen (nur Name, Zustand und Verfügbarkeit – keine Adressen)",
+        "en": "Kiosk wall: also show the uptime checks (only name, state and availability – no addresses)"
+      },
+      "default": false
+    },
+    {
+      "key": "tileUptime",
+      "type": "switch",
+      "label": {
+        "de": "Kachel: eine Zeile Erreichbarkeit zeigen",
+        "en": "Tile: show one line about reachability"
+      },
+      "default": true
     }
   ],
   "contributes": {
@@ -126,6 +174,15 @@
           "en": "Open status wall"
         },
         "keys": "ctrl+alt+w"
+      },
+      {
+        "id": "uptime",
+        "title": {
+          "de": "Erreichbarkeit öffnen",
+          "en": "Open reachability"
+        },
+        "keys": "ctrl+alt+u",
+        "action": "uptime"
       }
     ],
     "tabs": [
@@ -137,7 +194,8 @@
         },
         "icon": "tv",
         "on": "area:live",
-        "file": "page/index.html"
+        "file": "page/index.html",
+        "page": true
       }
     ]
   },

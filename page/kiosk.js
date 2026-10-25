@@ -9,10 +9,10 @@
   const TX = DE
     ? { title: 'Status-Wand', running: 'Läuft', busy: 'Im Wechsel', stopped: 'Gestoppt', problems: 'Probleme', summary: (u, a) => `${u} von ${a} Diensten laufen`, stale: (t) => `Stand ${t} – Hostwerk antwortet gerade nicht`, off: 'Die Kiosk-Wand ist in Hostwerk nicht freigegeben (Einstellungen → Erweiterungen → Status-Wand).', empty: 'Keine Dienste', full: 'Vollbild', fullOff: 'Vollbild beenden',
       kind: { web: 'Webserver', db: 'Datenbank', minecraft: 'Minecraft', game: 'Spiele-Server', app: 'App', mail: 'E-Mail', other: 'Sonstiges' }, group: { web: 'Webserver', db: 'Datenbanken', minecraft: 'Minecraft', game: 'Spiele-Server', app: 'Apps', mail: 'E-Mail', other: 'Sonstiges' },
-      state: { running: 'läuft', stopped: 'gestoppt', error: 'Fehler', starting: 'startet …', stopping: 'stoppt …' }, reachable: 'erreichbar', unreachable: 'nicht erreichbar', reachUnknown: 'wird geprüft', up: (d) => `seit ${d}`, players: (n) => `${n} Spieler`, spark: (c) => `Zuletzt ${c} % CPU` }
+      state: { running: 'läuft', stopped: 'gestoppt', error: 'Fehler', starting: 'startet …', stopping: 'stoppt …' }, checks: 'Erreichbarkeit', check: { up: 'erreichbar', down: 'nicht erreichbar', pending: 'noch nicht geprüft' }, avail: (p) => `${p} % in 24 h`, reachable: 'erreichbar', unreachable: 'nicht erreichbar', reachUnknown: 'wird geprüft', up: (d) => `seit ${d}`, players: (n) => `${n} Spieler`, spark: (c) => `Zuletzt ${c} % CPU` }
     : { title: 'Status Wall', running: 'Running', busy: 'Changing', stopped: 'Stopped', problems: 'Problems', summary: (u, a) => `${u} of ${a} services running`, stale: (t) => `As of ${t} – Hostwerk does not answer right now`, off: 'The kiosk wall is not shared in Hostwerk (Settings → Extensions → Status Wall).', empty: 'No services', full: 'Full screen', fullOff: 'Leave full screen',
       kind: { web: 'Web server', db: 'Database', minecraft: 'Minecraft', game: 'Game server', app: 'App', mail: 'E-mail', other: 'Other' }, group: { web: 'Web servers', db: 'Databases', minecraft: 'Minecraft', game: 'Game servers', app: 'Apps', mail: 'E-mail', other: 'Other' },
-      state: { running: 'running', stopped: 'stopped', error: 'error', starting: 'starting …', stopping: 'stopping …' }, reachable: 'reachable', unreachable: 'not reachable', reachUnknown: 'being checked', up: (d) => `up ${d}`, players: (n) => `${n} players`, spark: (c) => `Last ${c} % CPU` };
+      state: { running: 'running', stopped: 'stopped', error: 'error', starting: 'starting …', stopping: 'stopping …' }, checks: 'Reachability', check: { up: 'reachable', down: 'not reachable', pending: 'not checked yet' }, avail: (p) => `${p} % in 24 h`, reachable: 'reachable', unreachable: 'not reachable', reachUnknown: 'being checked', up: (d) => `up ${d}`, players: (n) => `${n} players`, spark: (c) => `Last ${c} % CPU` };
   const STATE_CLASS = { running: 'ok', error: 'err', starting: 'warn', stopping: 'warn' };
   const root = document.documentElement;
   root.lang = lang;
@@ -59,7 +59,23 @@
     $('sub').textContent = stale ? TX.stale(time(data.at)) : TX.summary(num(sum.running), num(sum.total));
     $('summary').replaceChildren(...[[TX.running, sum.running], [TX.busy, sum.busy], [TX.stopped, sum.stopped], [TX.problems, sum.problems]].map(([k, v]) => { const c = el('div', 'stat'); c.append(el('div', 'k', k), el('div', 'v', num(v))); return c; }));
     const groups = W.groups(all, opts);
-    $('groups').replaceChildren(...(groups.length ? groups.map(([k, xs]) => { const sec = el('section'); if (k) sec.append(el('h2', '', TX.group[k] || TX.group.other)); const g = el('div', 'grid'); g.append(...xs.map(tile)); sec.append(g); return sec; }) : [el('p', 'note', TX.empty)]));
+    const secs = groups.length ? groups.map(([k, xs]) => { const sec = el('section'); if (k) sec.append(el('h2', '', TX.group[k] || TX.group.other)); const g = el('div', 'grid'); g.append(...xs.map(tile)); sec.append(g); return sec; }) : [el('p', 'note', TX.empty)];
+    // 2.0: Erreichbarkeits-Prüfungen (nur, wenn in Hostwerk „Kiosk-Wand: auch Erreichbarkeit zeigen“ an ist)
+    if (Array.isArray(data.checks) && data.checks.length) secs.push(checkSection(data.checks));
+    $('groups').replaceChildren(...secs);
+  }
+  function checkSection(checks) {
+    const sec = el('section'); sec.append(el('h2', '', TX.checks));
+    const g = el('div', 'grid');
+    for (const c of checks) {
+      const cls = c.state === 'up' ? 'running' : c.state === 'down' ? 'error' : 'stopped';
+      const t = el('div', `tile ${cls}`); t.append(el('div', 'name', c.name));
+      const b = el('div', 'badges'); const st = el('span', `badge ${c.state === 'up' ? 'ok' : c.state === 'down' ? 'err' : ''}`); st.append(el('span', 'dot'), document.createTextNode(TX.check[c.state] || c.state)); b.append(st); t.append(b);
+      if (c.uptime24 != null) { const meta = el('div', 'meta'); meta.append(el('span', '', TX.avail(num(c.uptime24)))); t.append(meta); }
+      g.append(t);
+    }
+    sec.append(g);
+    return sec;
   }
   function note(text, warn) { $('note').hidden = !text; $('note').textContent = text || ''; $('note').className = `note ${warn ? 'warn' : ''}`; }
   async function load() {

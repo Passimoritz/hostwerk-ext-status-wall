@@ -2,9 +2,11 @@
 
 # Status-Wand
 
+> **Seit 2.0 steckt hier auch die frühere „Uptime-Wand“:** Reiter „Erreichbarkeit“ und „Öffentliche Statusseite“. Wer die Uptime-Wand hatte, bekommt diese Fassung automatisch; Hostwerk entfernt die alte.
+
 [English](README.md) · **Deutsch**
 
-Offizielle [Hostwerk](https://github.com/Passimoritz/hostwerk-public)-Erweiterung (läuft abgeschottet, ab Hostwerk 3.0)
+Offizielle [Hostwerk](https://github.com/Passimoritz/hostwerk-public)-Erweiterung (läuft abgeschottet, ab Hostwerk mit SDK 3.8)
 
 Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bildschirm oder das Tablet an der Wand. Ein Klick startet, stoppt oder startet neu (Hostwerk fragt vorher).
 
@@ -12,6 +14,10 @@ Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bilds
 
 ## Was sie kann
 
+- **Reiter:** Dienste · Erreichbarkeit · Öffentliche Statusseite – im Livebetrieb als ein Reiter „Status-Wand“ mit diesen Unterreitern
+- **Erreichbarkeit:** alle Prüfungen aus Livebetrieb → Überwachung groß und farbig, mit Verfügbarkeit in 24 Stunden, Ø-Antwortzeit, Ausfällen und Verlauf (Strg+Alt+U)
+- **Öffentliche Statusseite:** Besucher sehen ohne Anmeldung, ob deine Dienste laufen – nur Namen, Zustand, Verfügbarkeit und Verlauf; Titel, Text, welche Prüfungen, eigene Anzeigenamen, Link erneuern, auf Wunsch in einen Webseiten-Ordner schreiben
+- **Kiosk-Wand** auf Wunsch auch mit den Erreichbarkeits-Prüfungen (Einstellung, nur Name, Zustand und Verfügbarkeit); die Kachel zeigt eine Zeile Erreichbarkeit
 - Jeder Webserver, jede Datenbank, Minecraft- und Spiele-Server, App und der Mail-Fänger als Kachel (Spiele-Server lassen sich auch hier starten und stoppen und öffnen ihre eigene Seite)
 - Laufen / im Wechsel / gestoppt / Probleme oben, Probleme zuerst – „startet“ zählt nicht mehr als gestoppt
 - Starten, stoppen und neu starten mit Rückfrage

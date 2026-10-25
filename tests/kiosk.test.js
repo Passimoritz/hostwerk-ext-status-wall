@@ -49,3 +49,14 @@ test('server part: 403 until shared, then the wall – in Hostwerk’s process a
     assert.strictEqual(seen.filter((p) => p === '/overview').length, 1, 'cached for a few seconds');
   }
 });
+
+test('2.0: uptime checks on the kiosk wall only with “kioskUptime” – name, state, availability, never the address', async () => {
+  const plain = fakeHost({ sandboxed: true, settings: { kiosk: true } });
+  activate(plain.host);
+  assert.strictEqual((await call(plain.pub['/pub/wall'])).body.checks, undefined);
+  const { host, pub } = fakeHost({ sandboxed: true, settings: { kiosk: true, kioskUptime: true } });
+  activate(host);
+  const r = await call(pub['/pub/wall']);
+  assert.deepStrictEqual(r.body.checks, [{ name: 'Shop', state: 'up', uptime24: null }]);
+  assert.ok(!JSON.stringify(r.body.checks).includes('localhost'));
+});
