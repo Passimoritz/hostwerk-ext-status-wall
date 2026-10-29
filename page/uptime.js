@@ -23,7 +23,9 @@ async function load() {
   if (!checks.length) {
     const add = html`<button type="button" class="btn primary" id="up-add">${t('addCheck')}</button>`;
     Hostwerk.render('#up-app', Hostwerk.ui.empty ? Hostwerk.ui.empty({ title: t('emptyTitle'), text: t('emptyText'), icon: Hostwerk.raw(PULSE), action: add }) : html`<div class="empty"><h3>${t('emptyTitle')}</h3><p>${t('emptyText')}</p><div class="empty-action">${add}</div></div>`);
-    document.getElementById('up-add').addEventListener('click', () => Hostwerk.navigate('/live/monitor'));
+    // Hostwerk with SDK 3.11: watchers live under Go live → Monitoring → Watchers (/live/statuspage answers with "path"); older: /live/monitor
+    document.getElementById('up-add').addEventListener('click', () => Hostwerk.get('/live/statuspage').then((x) => !!x && x.path !== undefined).catch(() => false)
+      .then((now) => Hostwerk.navigate(now ? '/live/ueberwachung/waechter' : '/live/monitor')));
     return;
   }
   const tile = (c, big) => {

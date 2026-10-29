@@ -106,5 +106,9 @@
   "up.addCheck": "Add a check",
   "up.outages": "down {n}×",
   "up.loadFailed": "Couldn’t load the checks.",
-  "up.retry": "Try again"
+  "up.retry": "Try again",
+  "up.coreOn": "on",
+  "up.coreOff": "off",
+  "up.coreHint": "Hostwerk runs the public status page itself now: switch it on, choose the title and add notices under Go live → Monitoring → Status page.",
+  "up.coreOpen": "Open status page settings"
 }

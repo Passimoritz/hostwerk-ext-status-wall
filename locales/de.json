@@ -106,5 +106,9 @@
   "up.addCheck": "Prüfung anlegen",
   "up.outages": "{n}× ausgefallen",
   "up.loadFailed": "Die Prüfungen konnten nicht geladen werden.",
-  "up.retry": "Erneut versuchen"
+  "up.retry": "Erneut versuchen",
+  "up.coreOn": "an",
+  "up.coreOff": "aus",
+  "up.coreHint": "Die öffentliche Statusseite betreibt jetzt Hostwerk selbst: einschalten, Titel wählen und Ankündigungen schreiben unter Livebetrieb → Überwachung → Statusseite.",
+  "up.coreOpen": "Statusseite einrichten"
 }

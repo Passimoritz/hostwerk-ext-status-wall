@@ -14,7 +14,7 @@ Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bilds
 
 ## Was sie kann
 
-- **Reiter:** Dienste · Erreichbarkeit · Öffentliche Statusseite – im Livebetrieb als ein Reiter „Status-Wand“ mit diesen Unterreitern
+- **Reiter:** Dienste · Erreichbarkeit · Öffentliche Statusseite – im Livebetrieb als ein Abschnitt „Status-Wand“ mit diesen Unterreitern; ab Hostwerk 3.11 schaltet Hostwerk die öffentliche Statusseite selbst (Livebetrieb → Überwachung → Statusseite), der Reiter zeigt ihren Zustand und führt dorthin
 - **Erreichbarkeit:** alle Prüfungen aus Livebetrieb → Überwachung groß und farbig, mit Verfügbarkeit in 24 Stunden, Ø-Antwortzeit, Ausfällen und Verlauf (Strg+Alt+U)
 - **Öffentliche Statusseite:** Besucher sehen ohne Anmeldung, ob deine Dienste laufen – nur Namen, Zustand, Verfügbarkeit und Verlauf; Titel, Text, welche Prüfungen, eigene Anzeigenamen, Link erneuern, auf Wunsch in einen Webseiten-Ordner schreiben
 - **Kiosk-Wand** auf Wunsch auch mit den Erreichbarkeits-Prüfungen (Einstellung, nur Name, Zustand und Verfügbarkeit); die Kachel zeigt eine Zeile Erreichbarkeit
@@ -24,7 +24,7 @@ Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bilds
 - Erreichbarkeit aus der Uptime-Prüfung neben dem Prozesszustand („läuft, aber nicht erreichbar“)
 - Mini-Verlauf von CPU und Arbeitsspeicher je Kachel (mit Textalternative)
 - Deutlicher Fehlerzustand mit „Erneut versuchen“; nachgeladen wird nur, solange die Seite sichtbar ist
-- Im Livebetrieb → Betrieb → Status-Wand (seit 1.5 ohne eigenen Seitenleisten-Eintrag), Kürzel Strg+Alt+W
+- Im Livebetrieb → Überwachung → Status-Wand (ältere Hostwerk: Betrieb → Status-Wand; seit 1.5 ohne eigenen Seitenleisten-Eintrag), Kürzel Strg+Alt+W
 - Gruppen, gestoppte ausblenden, drei Kachelgrößen (auch „Wand“)
 - Kachel mit Ring für die Übersicht: wie viele Dienste laufen
 - Kiosk-Wand ohne Anmeldung (`/v/status-wall/`) für den zweiten Bildschirm oder das Tablet: nur lesend, Vollbild-Knopf, `?theme=light`, `?size=compact|wall`, `?stopped=0`, `?group=0`, `?lang=de` – erst, wenn du „Kiosk-Wand ohne Anmeldung freigeben“ einschaltest; ohne Ports, Pfade oder Adressen

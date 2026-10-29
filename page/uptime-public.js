@@ -12,7 +12,24 @@
     render();
   }
   const save = async (b, msg) => { try { s = await Hostwerk.put('/live/statuspage', b); if (msg) Hostwerk.toast(msg, { kind: 'success' }); } catch (e) { fail(e); } render(); };
+  // SDK 3.11: Hostwerk switches the status page on and off itself (Go live → Monitoring → Status page; GET /live/statuspage
+  // answers with "path"). Then only its state and the way there – no second place to switch it. Older Hostwerk: the full setup below.
+  const coreManaged = () => !!s && s.path !== undefined;
+  function renderCore() {
+    const link = (u) => html`<div class="row-tight up-link"><code class="grow ellipsis" title="${u}">${u}</code><button class="btn xs ghost" data-copy="${u}">${t('copy')}</button><button class="btn xs ghost" data-open="${u}">${t('open')}</button></div>`;
+    Hostwerk.render('#pub', html`
+      <div class="card card-pad stack">
+        <div class="row"><b class="grow">${t('pubTitle')}</b><span class="badge ${s.on ? 'ok' : ''}">${s.on ? t('coreOn') : t('coreOff')}</span></div>
+        <p class="small muted" style="margin:0">${t('coreHint')}</p>
+        ${s.on && (s.url || (s.links && s.links.local)) ? link(s.url || s.links.local) : ''}
+        <div class="row"><span class="grow"></span><button class="btn sm primary" id="up-core">${t('coreOpen')}</button></div>
+      </div>`);
+    $('core').onclick = () => Hostwerk.navigate('/live/ueberwachung/statusseite');
+    for (const b of document.querySelectorAll('[data-copy]')) b.onclick = () => Hostwerk.copy(b.dataset.copy).then(() => Hostwerk.toast(t('copied'), { kind: 'success' })).catch(fail);
+    for (const b of document.querySelectorAll('[data-open]')) b.onclick = () => Hostwerk.openUrl(b.dataset.open).catch(fail);
+  }
   function render() {
+    if (coreManaged()) { renderCore(); return; }
     const picked = (id) => !s.checks.length || s.checks.includes(id);
     const link = (u) => html`<div class="row-tight up-link"><code class="grow ellipsis" title="${u}">${u}</code><button class="btn xs ghost" data-copy="${u}">${t('copy')}</button><button class="btn xs ghost" data-open="${u}">${t('open')}</button></div>`;
     Hostwerk.render('#pub', html`

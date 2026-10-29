@@ -14,7 +14,7 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 
 ## What it does
 
-- **Tabs:** Services · Reachability · Public status page – in Go live one tab “Status wall” with these sub tabs
+- **Tabs:** Services · Reachability · Public status page – in Go live one section “Status wall” with these sub tabs; with Hostwerk 3.11 and newer Hostwerk switches the public status page itself (Go live → Monitoring → Status page), the tab shows its state and leads there
 - **Reachability:** every check from Go live → Monitoring big and colourful, with availability in 24 hours, average response time, outages and history (Ctrl+Alt+U)
 - **Public status page:** visitors see without login whether your services run – only names, state, availability and history; title, text, which checks, own display names, renew the link, optionally write it into a website folder
 - **Kiosk wall** optionally with the uptime checks too (setting, only name, state and availability); the tile shows one line about reachability
@@ -24,7 +24,7 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 - Reachability from the uptime checks next to the process state (“running, but not reachable”)
 - Small CPU and memory history per tile (with a text alternative)
 - Clear error state with “Try again”; refreshes only while the page is visible
-- In Go live → Operate → Status wall (no own sidebar entry since 1.5), shortcut Ctrl+Alt+W
+- In Go live → Monitoring → Status wall (older Hostwerk: Operate → Status wall; no own sidebar entry since 1.5), shortcut Ctrl+Alt+W
 - Grouping, hide stopped services, three tile sizes (incl. “wall”)
 - Dashboard tile with a ring: how many services run
 - Kiosk wall without sign-in (`/v/status-wall/`) for a second screen or a tablet: read only, full screen button, `?theme=light`, `?size=compact|wall`, `?stopped=0`, `?group=0`, `?lang=de` – only after you switch on “Share the kiosk wall without sign-in”; no ports, paths or addresses

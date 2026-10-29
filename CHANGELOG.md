@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+- Go live in five areas (Hostwerk with SDK 3.11): the wall is a section in Go live → Monitoring (#/live/ueberwachung/wall) with its sub tabs; older Hostwerk versions keep the tab under “Operate”. / Livebetrieb in fünf Bereichen (Hostwerk mit SDK 3.11): Die Wand ist ein Abschnitt unter Livebetrieb → Überwachung (#/live/ueberwachung/wall) mit ihren Unterreitern; ältere Hostwerk-Versionen behalten den Reiter unter „Betrieb“.
+- Public status page: Hostwerk 3.11 and newer switch it on and off themselves (Go live → Monitoring → Status page) – the tab shows its state and address and leads there instead of a second switch. Older Hostwerk versions keep the full setup here. / Öffentliche Statusseite: Hostwerk 3.11 und neuer schalten sie selbst ein und aus (Livebetrieb → Überwachung → Statusseite) – der Reiter zeigt Zustand und Adresse und führt dorthin statt eines zweiten Schalters. Ältere Hostwerk-Versionen behalten die volle Einrichtung hier.
+- “Add check” leads to Go live → Monitoring → Watchers (older Hostwerk: Monitoring as before). / „Prüfung hinzufügen“ führt zu Livebetrieb → Überwachung → Wächter (ältere Hostwerk: Überwachung wie bisher).
+
 ## 2.0.0
 
 - The former extension "Uptime wall" lives here now (SDK 3.8 `replaces`): new tabs "Reachability" (every uptime check with availability, response time and history) and "Public status page"; Hostwerk installs this version for everyone who had the uptime wall and removes it. Go live has one tab less; the tab there now shows the whole page with its sub tabs. / Die frühere Erweiterung „Uptime-Wand“ steckt jetzt hier (SDK 3.8 `replaces`): neue Reiter „Erreichbarkeit“ (alle Prüfungen mit Verfügbarkeit, Antwortzeit und Verlauf) und „Öffentliche Statusseite“; Hostwerk installiert diese Fassung für alle mit der Uptime-Wand und entfernt sie. Der Livebetrieb hat einen Reiter weniger; der Reiter dort zeigt jetzt die ganze Seite mit Unterreitern.
