@@ -51,7 +51,7 @@
       box.hidden = !checks.length;
       if (box.hidden) return;
       const o = Uptime.overall(checks);
-      Hostwerk.render(box, html`<span class="dot ${o.down ? 'err' : 'ok'}"></span>${o.down ? t('up.someDown', { n: o.down }) : t('up.allUp')}`);
+      Hostwerk.render(box, html`<span class="dot ${o.down ? 'err' : o.pending ? '' : 'ok'}"></span>${o.down ? t('up.someDown', { n: o.down }) : o.pending ? t('up.somePending', { n: o.pending }) : t('up.allUp')}`);
     }
     const both = () => { load(); loadUptime().catch(() => {}); };
     // Alle 20 s nachladen – nicht, solange die Übersicht verborgen ist

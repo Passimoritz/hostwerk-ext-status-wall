@@ -50,6 +50,14 @@ test('server part: 403 until shared, then the wall – in Hostwerk’s process a
   }
 });
 
+test('server part: the sandbox hands the public path over without /pub – /wall answers the same', async () => {
+  const { host, pub } = fakeHost({ sandboxed: true, settings: { kiosk: true } });
+  activate(host);
+  const r = await call(pub['/wall']);
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.body.services.length, 3);
+});
+
 test('2.0: uptime checks on the kiosk wall only with “kioskUptime” – name, state, availability, never the address', async () => {
   const plain = fakeHost({ sandboxed: true, settings: { kiosk: true } });
   activate(plain.host);
@@ -59,4 +67,15 @@ test('2.0: uptime checks on the kiosk wall only with “kioskUptime” – name,
   const r = await call(pub['/pub/wall']);
   assert.deepStrictEqual(r.body.checks, [{ name: 'Shop', state: 'up', uptime24: null }]);
   assert.ok(!JSON.stringify(r.body.checks).includes('localhost'));
+});
+
+test('kiosk: a check without its own name (Hostwerk sends the address as name) stays nameless – no address in public', async () => {
+  const { host, pub } = fakeHost({ sandboxed: true, settings: { kiosk: true, kioskUptime: true } });
+  UP.checks.push({ name: 'http://127.0.0.1:18100/', url: 'http://127.0.0.1:18100/', ok: false });
+  try {
+    activate(host);
+    const r = await call(pub['/pub/wall']);
+    assert.strictEqual(r.body.checks[1].name, '');
+    assert.ok(!JSON.stringify(r.body).includes('127.0.0.1'));
+  } finally { UP.checks.pop(); }
 });

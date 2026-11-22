@@ -111,5 +111,19 @@
     return { at: now, services };
   }
 
-  return { KINDS, BUSY, fromOverview, summary, groups, actions, procKey, histories, sparkPoints, reachability, publicWall };
+  /**
+   * Adresse der Kiosk-Wand mit Optionen (wie kiosk.js sie liest): size compact|wall, theme light, lang de|en,
+   * stopped false = gestoppte ausblenden, group false = eine Liste. Standardwerte erscheinen nicht in der Adresse.
+   */
+  function kioskLink(base, o = {}) {
+    const q = [];
+    if (o.size === 'compact' || o.size === 'wall') q.push(`size=${o.size}`);
+    if (o.theme === 'light') q.push('theme=light');
+    if (o.lang === 'de' || o.lang === 'en') q.push(`lang=${o.lang}`);
+    if (o.stopped === false) q.push('stopped=0');
+    if (o.group === false) q.push('group=0');
+    return q.length ? `${base}?${q.join('&')}` : base;
+  }
+
+  return { kioskLink, KINDS, BUSY, fromOverview, summary, groups, actions, procKey, histories, sparkPoints, reachability, publicWall };
 }));

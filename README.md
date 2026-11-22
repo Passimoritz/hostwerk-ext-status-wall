@@ -32,8 +32,8 @@ All services big and colourful at a glance – ideal for a second screen or a ta
 
 ## Install
 
-In Hostwerk (3.0 or newer): **Apps → Extensions → Marketplace → Status Wall → Install** (badge *Official*).
-Or manually: download `status-wall-1.0.0.zip` from the [latest release](../../releases/latest) → *Apps → Extensions → File*.
+In Hostwerk: **Extensions → Discover → Status Wall → Install** (badge *Official*).
+Or manually: download `status-wall-<version>.zip` from the [latest release](../../releases/latest) → *Extensions → From file (.zip)*.
 
 ## Permissions
 
@@ -42,6 +42,7 @@ Or manually: download `status-wall-1.0.0.zip` from the [latest release](../../re
 - `read:system` – load per service for the small history
 - `read:live` – results of the uptime checks
 - `share:view` – the kiosk wall without sign-in (off until you share it)
+- `share:status` – set up the public status page (tab “Public status page”, you confirm every change)
 - `native` – a small server part that answers the kiosk wall (read only)
 
 Runs sandboxed in Hostwerk – no access to logins, settings or files.

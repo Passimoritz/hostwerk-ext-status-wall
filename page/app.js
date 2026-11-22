@@ -33,7 +33,7 @@ function tile(s) {
     : html`<button type="button" class="btn sm ${act === 'start' ? 'primary' : act === 'stop' ? 'ghost' : ''}" data-act="${act}" data-kind="${s.kind}" data-id="${s.id}" aria-label="${t(act + 'Named', { name: s.name })}">${t(act)}</button>`);
   return html`<div class="card card-pad tile ${s.state}">
     <div class="kind">${t(`kind.${s.kind}`)}</div>
-    <div class="name ellipsis">${s.name}</div>
+    <div class="name ellipsis" title="${s.name}">${s.name}</div>
     <div class="row-tight" style="flex-wrap: wrap">
       <span class="badge ${STATE_CLASS[s.state] || ''}"><span class="dot ${STATE_CLASS[s.state] || ''}${s.state === 'starting' || s.state === 'stopping' ? ' hw-pulse' : ''}"></span>${t(`state.${s.state}`)}</span>
       ${reach ? html`<span class="badge ${reach.ok === false ? 'err' : reach.ok ? 'ok' : ''}" title="${t('reachHint', { name: reach.name })}">${t(reach.ok === false ? 'unreachable' : reach.ok ? 'reachable' : 'reachUnknown')}</span>` : ''}
@@ -77,26 +77,43 @@ async function render() {
   countAll({ running: sum.running, busy: sum.busy, stopped: sum.stopped, problems: sum.problems });
   const groups = W.groups(all, { group: settings.group !== false, showStopped: settings.showStopped !== false });
   drawKiosk(settings);
-  if (!groups.length) return Hostwerk.render('#groups', html`<div class="card card-pad empty"><b>${t('empty')}</b>${t('emptyHint')}</div>`);
-  Hostwerk.render('#groups', html`${groups.map(([k, xs]) => html`<section>${k ? html`<h2>${t(`group.${k}`)}</h2>` : ''}<div class="grid-auto${firstTiles ? ' hw-stagger' : ''}">${xs.map(tile)}</div></section>`)}`);
+  if (!groups.length) return Hostwerk.render('#groups', (all.length ? html`<div class="card card-pad empty"><b>${t('emptyHidden')}</b>${t('emptyHiddenHint')}</div>` : html`<div class="card card-pad empty"><b>${t('empty')}</b>${t('emptyHint')}</div>`));
+  Hostwerk.render('#groups', html`${groups.map(([k, xs]) => html`<section>${k ? html`<h2>${t(`group.${k}`)}</h2>` : ''}<div class="tiles${firstTiles ? ' hw-stagger' : ''}">${xs.map(tile)}</div></section>`)}`);
   firstTiles = false;
   return undefined;
 }
 
 /** Address of the kiosk wall (public view) – for a second screen or a tablet, without Hostwerk around it. */
-const kioskUrl = () => { let origin = ''; try { origin = new URL(document.referrer).origin; } catch { /* Adresse steht auch in der Detailansicht der Erweiterung */ } return `${origin}/v/status-wall/`; };
+// Optionen für den Link (Größe, Design, Sprache, gestoppte, Gruppen) – gelten, solange die Seite offen ist
+let kopt = { size: '', theme: '', lang: '', stopped: true, group: true };
+const kioskBase = () => { let origin = ''; try { origin = new URL(document.referrer).origin; } catch { /* Adresse steht auch in der Detailansicht der Erweiterung */ } return `${origin}/v/status-wall/`; };
+const kioskUrl = () => W.kioskLink(kioskBase(), kopt);
 function drawKiosk(settings) {
   Hostwerk.render('#kiosk', html`<div class="card card-pad stack"><b>${t('kioskTitle')}</b>${settings.kiosk
-    ? html`<div class="row-tight"><code class="grow ellipsis">${kioskUrl()}</code><button type="button" class="btn sm" data-act="copy-kiosk">${t('copyLink')}</button></div><p class="muted small">${t('kioskHint')}</p>`
+    ? html`<div class="row kiosk-opts">
+        <label class="row-tight small"><span>${t('kSize')}</span><select class="select sm" data-kopt="size">${[['', t('kSizeNormal')], ['compact', t('kSizeCompact')], ['wall', t('kSizeWall')]].map(([v, l]) => html`<option value="${v}" ${kopt.size === v ? Hostwerk.raw('selected') : ''}>${l}</option>`)}</select></label>
+        <label class="row-tight small"><span>${t('kTheme')}</span><select class="select sm" data-kopt="theme">${[['', t('kThemeDark')], ['light', t('kThemeLight')]].map(([v, l]) => html`<option value="${v}" ${kopt.theme === v ? Hostwerk.raw('selected') : ''}>${l}</option>`)}</select></label>
+        <label class="row-tight small"><span>${t('kLang')}</span><select class="select sm" data-kopt="lang">${[['', t('kLangAuto')], ['de', 'Deutsch'], ['en', 'English']].map(([v, l]) => html`<option value="${v}" ${kopt.lang === v ? Hostwerk.raw('selected') : ''}>${l}</option>`)}</select></label>
+        <label class="row-tight small"><input type="checkbox" data-kopt="stopped" ${kopt.stopped ? Hostwerk.raw('checked') : ''}> ${t('kStopped')}</label>
+        <label class="row-tight small"><input type="checkbox" data-kopt="group" ${kopt.group ? Hostwerk.raw('checked') : ''}> ${t('kGroup')}</label>
+      </div>
+      <div class="row-tight"><code class="grow ellipsis" id="kiosk-url">${kioskUrl()}</code><button type="button" class="btn sm" data-act="copy-kiosk">${t('copyLink')}</button></div><p class="muted small">${t('kioskHint')}</p>`
     : html`<p class="muted small">${t('kioskOff')}</p><div><button type="button" class="btn sm" data-act="settings">${t('settings')}</button></div>`}</div>`);
 }
+
+document.addEventListener('change', (e) => {
+  const k = e.target && e.target.dataset && e.target.dataset.kopt;
+  if (!k) return;
+  kopt = { ...kopt, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value };
+  const u = document.getElementById('kiosk-url'); if (u) u.textContent = kioskUrl();
+});
 
 document.addEventListener('click', async (e) => {
   const b = e.target.closest('button[data-act]');
   if (!b) return;
   const act = b.dataset.act;
   if (act === 'retry') return load();
-  if (act === 'copy-kiosk') return Hostwerk.copy(kioskUrl()).catch(() => {});
+  if (act === 'copy-kiosk') return Hostwerk.copy(kioskUrl()).then(() => Hostwerk.toast(t('copied'), { kind: 'success' })).catch((er) => Hostwerk.toast(er.message, { kind: 'error' }));
   if (act === 'settings') return Hostwerk.settings.open().catch(() => {});
   if (act === 'open') return Hostwerk.navigate(`${ROUTE[b.dataset.kind] || '/'}${b.dataset.id}`);
   b.disabled = true;

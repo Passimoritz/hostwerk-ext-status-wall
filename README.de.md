@@ -32,8 +32,8 @@ Alle Dienste groß und farbig auf einen Blick – ideal für einen zweiten Bilds
 
 ## Installieren
 
-In Hostwerk (ab 3.0): **Apps → Erweiterungen → Marktplatz → Status-Wand → Installieren** (Abzeichen *Offiziell*).
-Oder von Hand: `status-wall-1.0.0.zip` aus dem [neuesten Release](../../releases/latest) laden → *Apps → Erweiterungen → Datei*.
+In Hostwerk: **Erweiterungen → Entdecken → Status-Wand → Installieren** (Abzeichen *Offiziell*).
+Oder von Hand: `status-wall-<version>.zip` aus dem [neuesten Release](../../releases/latest) laden → *Erweiterungen → Aus Datei (.zip)*.
 
 ## Rechte
 
@@ -42,6 +42,7 @@ Oder von Hand: `status-wall-1.0.0.zip` aus dem [neuesten Release](../../releases
 - `read:system` – Auslastung je Dienst für den Mini-Verlauf
 - `read:live` – Ergebnisse der Erreichbarkeits-Prüfung
 - `share:view` – die Kiosk-Wand ohne Anmeldung (aus, bis du sie freigibst)
+- `share:status` – die öffentliche Statusseite einrichten (Reiter „Öffentliche Statusseite“, jede Änderung bestätigst du)
 - `native` – ein kleiner Server-Teil, der die Kiosk-Wand beantwortet (nur lesend)
 
 Läuft in Hostwerk abgeschottet – kein Zugriff auf Anmeldungen, Einstellungen oder Dateien.

@@ -56,3 +56,10 @@ test('Erreichbarkeit: gleicher Port auf diesem Rechner oder gleicher Name', () =
   assert.strictEqual(W.reachability({ name: 'Anders', port: 1234 }, checks), null);
   assert.strictEqual(W.reachability({ name: 'X', port: 80 }, [{ url: 'kaputt' }]), null);
 });
+
+test('Kiosk-Link mit Optionen: nur abweichende Werte, Reihenfolge fest', () => {
+  const base = 'http://127.0.0.1:7777/v/status-wall/';
+  assert.strictEqual(W.kioskLink(base, {}), base);
+  assert.strictEqual(W.kioskLink(base, { size: 'wall', theme: 'light', lang: 'de', stopped: false, group: false }), `${base}?size=wall&theme=light&lang=de&stopped=0&group=0`);
+  assert.strictEqual(W.kioskLink(base, { size: 'huge', theme: 'pink', lang: 'fr', stopped: true, group: true }), base);
+});

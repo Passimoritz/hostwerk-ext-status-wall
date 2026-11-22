@@ -7,3 +7,7 @@
 .up-spark polyline { fill: none; stroke: var(--accent); stroke-width: 1.5; }
 .up-link code { font-size: var(--fs-xs, 12px); background: var(--surface-2); padding: var(--sp-1, 4px) var(--sp-2, 8px); border-radius: var(--r-sm, 6px); }
 .up-check { flex-wrap: wrap; }
+/* 2.1: eigener Anzeigename je Prüfung (✎ neben dem Namen) */
+.up-rename { flex: none; opacity: .6; }
+.up-tile:hover .up-rename, .up-rename:focus-visible { opacity: 1; }
+.up-name-input { min-width: 0; }

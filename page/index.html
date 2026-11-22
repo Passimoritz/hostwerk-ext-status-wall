@@ -20,10 +20,14 @@
     .spark polyline { fill: none; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
     .spark-cpu { stroke: var(--accent-2, var(--accent)); }
     .spark-mem { stroke: var(--muted); stroke-dasharray: 3 2; }
-    body.size-compact .grid-auto { --hw-min: 190px; } body.size-compact .tile .name { font-size: var(--fs-md, 14px); }
-    body.size-wall .grid-auto { --hw-min: 300px; } body.size-wall .tile { padding: var(--sp-6, 24px); } body.size-wall .tile .name { font-size: var(--fs-2xl, 24px); }
+    /* Eigenes Raster: Hostwerks .grid-auto hat kein display:grid und keine einstellbare Mindestbreite */
+    .tiles { display: grid; gap: var(--sp-3, 12px); grid-template-columns: repeat(auto-fill, minmax(min(var(--hw-min), 100%), 1fr)); --hw-min: 240px; }
+    body.size-compact .tiles { --hw-min: 190px; } body.size-compact .tile .name { font-size: var(--fs-md, 14px); }
+    body.size-wall .tiles { --hw-min: 320px; } body.size-wall .tile { padding: var(--sp-6, 24px); } body.size-wall .tile .name { font-size: var(--fs-2xl, 24px); }
     .clock { font-size: var(--fs-3xl, 28px); font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
     .kiosk-card { margin-top: var(--sp-5, 20px); }
+    .kiosk-opts { flex-wrap: wrap; gap: var(--sp-2, 8px) var(--sp-4, 16px); }
+    .kiosk-opts .select { width: auto; }
     @media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
   </style>
 </head>

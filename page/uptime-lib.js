@@ -12,7 +12,7 @@
   /** Ausfälle im Verlauf (Blöcke aufeinanderfolgender Fehlschläge). */
   function outages(history) { let n = 0; let prev = 1; for (const p of history || []) { if (!p[1] && prev) n++; prev = p[1]; } return n; }
   /** Gesamtbild: alle oben? */
-  function overall(checks) { const list = checks || []; const down = list.filter((c) => state(c) === 'down').length; return { total: list.length, down, up: list.filter((c) => state(c) === 'up').length, level: down ? 'err' : list.length ? 'ok' : 'none' }; }
+  function overall(checks) { const list = checks || []; const down = list.filter((c) => state(c) === 'down').length; const up = list.filter((c) => state(c) === 'up').length; const pending = list.length - down - up; return { total: list.length, down, up, pending, level: down ? 'err' : pending ? 'pending' : list.length ? 'ok' : 'none' }; }
   /** Textalternative zur Verlaufslinie: Verfügbarkeit, Ø-Antwortzeit, Ausfälle (Formatierer kommen von der Seite). */
   function describe(c, f) {
     const parts = [`${f.uptime}: ${f.pct(c.uptime24)}`];
@@ -21,6 +21,22 @@
     if (n) parts.push(f.outages(n));
     return parts.join(' · ');
   }
-  const api = { state, spark, outages, overall, describe };
+  /** Eigene Anzeigenamen für die Wand (nur hier, Hostwerks Prüfung bleibt unverändert): name = eigener Name, wallName = er ist gesetzt. */
+  function applyNames(checks, names) {
+    const n = names && typeof names === 'object' ? names : {};
+    return (checks || []).map((c) => (c && c.id != null && typeof n[c.id] === 'string' && n[c.id].trim() ? { ...c, name: n[c.id].trim(), origName: c.name, wallName: true } : c));
+  }
+  /** Anzeigenamen ändern: leer = löschen, höchstens 80 Zeichen, ohne Steuerzeichen, höchstens 500 Einträge. */
+  function setName(names, id, name) {
+    const out = { ...(names && typeof names === 'object' ? names : {}) };
+    const key = String(id == null ? '' : id).slice(0, 100);
+    if (!key) return out;
+    const v = String(name == null ? '' : name).replace(/[\u0000-\u001f]/g, '').trim().slice(0, 80);
+    if (v) out[key] = v; else delete out[key];
+    const keys = Object.keys(out);
+    if (keys.length > 500) for (const k of keys.slice(0, keys.length - 500)) delete out[k];
+    return out;
+  }
+  const api = { state, spark, outages, overall, describe, applyNames, setName };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Uptime = api;
 })(typeof window !== 'undefined' ? window : globalThis);
